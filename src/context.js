@@ -57,7 +57,7 @@ class ProductProvider extends Component {
     this.setState(() => {
       return {products: tempProducts, cart: [...this.state.cart, product] };
     }, () => {
-      console.log(this.state);
+      this.addTotals();
     });
   };
   
@@ -83,13 +83,52 @@ class ProductProvider extends Component {
   }
 
   removeItem = (id) => {
-    console.log("This was removed");
+    let tempProducts = [...this.state.products];
+    let tempCart = [...this.state.cart];
+
+    tempCart = tempCart.filter(item => item.id !== id);
+
+    const index = tempProducts.indexOf(this.getItem(id));
+    let removedProduct = tempProducts[index];
+    removedProduct.count = 0;
+    removedProduct.total = 0;
+    removedProduct.inCart = false;
+
+    this.setState(() => {
+      return {
+        cart: [...tempCart],
+        products: [...tempProducts]
+      }
+    }, () => {
+      this.addTotals();
+    })
   }
 
   clearCart = () => {
-    console.log("cart was cleared");
+    this.setState(() => {
+      return {
+        cart: []
+      }
+    }, () => {
+      this.setProducts();
+      this.addTotals()
+    })
   };
 
+  addTotals = () => {
+    let subTotal = 0;
+    this.state.cart.map( item => subTotal += item.total );
+    const tempTax = subTotal * 0.01;
+    const tax = parseFloat(tempTax.toFixed(2));
+    const total = subTotal + tax;
+    this.setState(() => {
+      return {
+        cartSubtotal: subTotal,
+        cartTax: tax,
+        cartTotal: total
+      };
+    });
+  };
 
   render() {
     return (
