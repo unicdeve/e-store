@@ -12,7 +12,7 @@ class ProductProvider extends Component {
       cart: [],
       modalOpen: false,
       modalProduct: detailProduct,
-      cartSubTotal:0,
+      cartSubtotal:0,
       cartTax:0,
       cartTotal:0
   };
@@ -74,6 +74,10 @@ class ProductProvider extends Component {
     });
   };
 
+  increment = (id) => {
+    console.log("Item incremented");
+  };
+
   decrement = (id) => {
     console.log("This is decrement method");
   }
@@ -81,10 +85,6 @@ class ProductProvider extends Component {
   removeItem = (id) => {
     console.log("This was removed");
   }
-
-  increment = (id) => {
-    console.log("Item incremented");
-  };
 
   clearCart = () => {
     console.log("cart was cleared");

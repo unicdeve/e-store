@@ -4,29 +4,31 @@ import CartColumn from './CartColumn';
 import EmptyCart from './EmptyCart';
 import { ProductConsumer } from '../../context';
 import CartList from './CartList';
+import CartTotals from './CartTotals';
 
-export default class Navbar extends Component {
+export default class Cart extends Component {
     render() {
         return (
             <section>
-                <ProductConsumer>
-                    {value => {
-                        const {cart} = value;
-                        if (cart.length > 0){
-                            return(
-                                <React.Fragment>
-                                    <Title name="your" title="cart" />
-                                    <CartColumn />
-                                    <CartList value={value} />
-                                </React.Fragment>
-                            );
-                        }
+              <ProductConsumer>
+                {value => {
+                  const {cart} = value;
+                  if (cart.length > 0){
+                    return(
+                      <React.Fragment>
+                        <Title name="your" title="cart" />
+                        <CartColumn />
+                        <CartList value={value} />
+                        <CartTotals value={value}/>
+                      </React.Fragment>
+                    );
+                  }
 
-                        else {
-                            return <EmptyCart />;
-                        }
-                    }}
-                </ProductConsumer>
+                  else {
+                      return <EmptyCart />;
+                  }
+                }}
+              </ProductConsumer>
             </section>
         );
     }
